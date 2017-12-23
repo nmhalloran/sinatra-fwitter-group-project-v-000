@@ -17,7 +17,12 @@ class ApplicationController < Sinatra::Base
 
   post '/login' do
     @user = User.find_by(username: params["username"])
-    erb :'/users/#{@user.id}'
+    if @user != nil && @user.password == params[:password]
+      session[:user_id] = @user.id
+      redirect to '/tweets'
+    end
+
+    erb :'/users/show'
   end
 
   get '/signup' do
@@ -33,7 +38,7 @@ class ApplicationController < Sinatra::Base
     @user.password = params[:password]
     @user.save
 
-    erb :'/users/show'
+    redirect to "/tweets"
   end
 
 end
