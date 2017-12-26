@@ -26,7 +26,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/login' do
-    erb :'/users/login'
+    User.is_logged_in?(session) ? (redirect to '/tweets') : (erb :'/users/login')
   end
 
   post '/login' do
@@ -48,7 +48,7 @@ class ApplicationController < Sinatra::Base
   end
 
   post '/signup' do
-    if params[:username].empty? | params[:email].empty?| params[:password].empty?
+    if params[:username].empty? | params[:email].empty? | params[:password].empty?
       redirect to "/users/signup"
     end
     @user = User.new(username: params[:username])
