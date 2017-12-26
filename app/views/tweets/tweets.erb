@@ -1,0 +1,11 @@
+<% if User.is_logged_in?(session) %>
+  <h1>Welcome, <%= User.current_user(session).username %></h1>
+  <h3>Your Tweets: </h3>
+  <% User.current_user(session).tweets.each do |tweet| %>
+    <li><%= tweet.content %> </li>
+  <%end%>
+<%else%>
+  <%=redirect to '/'%>
+<%end%>
+
+<h4><a href="/logout">Log Out</a></h4>
