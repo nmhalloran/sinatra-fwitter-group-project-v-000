@@ -3,7 +3,7 @@
   <h3>All tweets: </h3>
   <% @tweets.each do |tweet| %>
     <li><%= tweet.content %>
-    <a style= button, href="/tweets/<%= tweet.id %>/edit">Edit Tweet</a>
+    <a href="/tweets/<%= tweet.id %>/edit">Edit Tweet</a>
       <form method="post" action="/tweets/<%= tweet.id %>/delete">
         <input id="hidden" type="hidden" name="_method" value="delete">
         <input type="submit" value="Delete Tweet">
@@ -13,6 +13,8 @@
 <%else%>
   <%=redirect to '/'%>
 <%end%>
+
+<h3><a href="/users/<%=@user.slug%>">View Your Tweets</h3>
 
 <h3><a href="/tweets/new">New Tweet</a></h3>
 <br>

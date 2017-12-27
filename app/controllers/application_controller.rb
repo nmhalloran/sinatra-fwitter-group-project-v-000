@@ -59,7 +59,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/users/:slug' do
-    @user = User.find_by_slug(:slug)
+    @user = User.find_by_slug(params[:slug])
     erb :'/users/show'
   end
 
@@ -80,6 +80,7 @@ class ApplicationController < Sinatra::Base
   get '/tweets' do
     if User.is_logged_in?(session)
       @tweets = Tweet.all
+      @user = User.find(session[:user_id])
       erb :'/tweets/tweets'
     else
       redirect to '/login'
