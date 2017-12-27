@@ -31,7 +31,7 @@ class ApplicationController < Sinatra::Base
 
   post '/login' do
     @user = User.find_by(username: params["username"])
-    if @user != nil # && @user.password == params[:password]
+    if @user != nil && @user.password == params[:password]
       session[:user_id] = @user.id
       redirect to "/tweets"
     end
@@ -59,7 +59,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get '/users/:slug' do
-    @user = User.find_by_slug()
+    @user = User.find_by_slug(:slug)
   end
 
   get '/tweets/new' do
