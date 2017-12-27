@@ -98,6 +98,7 @@ class ApplicationController < Sinatra::Base
     if User.is_logged_in?(session)
       @user = User.find(session[:user_id])
       if Tweet.find(params[:id].to_i).user_id == session[:user_id]
+        @tweet = Tweet.find(params[:id].to_i)
         erb :'/tweets/edit_tweet'
       end
     else
@@ -106,13 +107,14 @@ class ApplicationController < Sinatra::Base
   end
 
   patch '/tweets/:id' do
+    binding.pry
     if params[:content].empty?
       redirect to "/tweets/#{@tweet.id}/edit"
     end
     @tweet = Tweet.find(params[:id].to_i)
-    @tweet.update
     @tweet.content = params[:content]
     @tweet.user_id = session[:user_id]
+    @tweet.save
     redirect to "/tweets/#{@tweet.id}"
   end
 
