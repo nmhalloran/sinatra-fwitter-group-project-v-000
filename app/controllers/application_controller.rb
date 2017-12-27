@@ -107,21 +107,23 @@ class ApplicationController < Sinatra::Base
   end
 
   patch '/tweets/:id' do
-    binding.pry
+    @tweet = Tweet.find(params[:id].to_i)
     if params[:content].empty?
       redirect to "/tweets/#{@tweet.id}/edit"
     end
-    @tweet = Tweet.find(params[:id].to_i)
     @tweet.content = params[:content]
     @tweet.user_id = session[:user_id]
     @tweet.save
     redirect to "/tweets/#{@tweet.id}"
   end
 
-  post '/tweets/:id/delete' do
+  delete '/tweets/:id/delete' do
     if User.is_logged_in?(session)
       @tweet = Tweet.find(params[:id].to_i)
-      Tweet.destroy(params[:id].to_i)
+      if @tweet.user_id == session[:user_id]
+        Tweet.destroy(params[:id].to_i)
+      end
+      redirect to '/tweets'
     else
       redirect to '/login'
     end

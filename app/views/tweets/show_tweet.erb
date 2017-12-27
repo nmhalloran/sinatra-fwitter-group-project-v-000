@@ -1,11 +1,7 @@
 <h3>Your New Tweet: </h3>
 <%= @tweet.content %></h3>
 
-<form method="post" action="/tweets/<%= @tweet.id %>">
-  <input id="hidden" type="hidden" name="_method" value="patch">
-  <input type="submit" value="Edit Tweet">
-</form>
-
+<a style= button, href="/tweets/<%= @tweet.id %>/edit">Edit Tweet</a>
 <form method="post" action="/tweets/<%= @tweet.id %>/delete">
   <input id="hidden" type="hidden" name="_method" value="delete">
   <input type="submit" value="Delete Tweet">
