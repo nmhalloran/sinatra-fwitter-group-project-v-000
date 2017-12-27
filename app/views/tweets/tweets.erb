@@ -1,7 +1,7 @@
 <% if User.is_logged_in?(session) %>
   <h1>Welcome, <%= User.current_user(session).username %></h1>
-  <h3>Your Tweets: </h3>
-  <% User.current_user(session).tweets.each do |tweet| %>
+  <h3>All tweets: </h3>
+  <% @tweets.each do |tweet| %>
     <li><%= tweet.content %> </li>
   <%end%>
 <%else%>
